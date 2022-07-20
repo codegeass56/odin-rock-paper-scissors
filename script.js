@@ -41,7 +41,7 @@ function game(){
     console.log(`Round ${i + 1}:`);
     let playerSelection = prompt(`Enter your choice (Rock, Paper or Scissors)`);
     let computerSelection = getComputerChoice();
-    console.log(computerSelection);
+    console.log(`Computer Choice: ${computerSelection}`);
     let winner = playRound(playerSelection,computerSelection);
 
     if(winner === `Player`){
