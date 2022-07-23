@@ -11,37 +11,37 @@ function playRound(playerSelection, computerSelection) {
 
   if (playerSelection === `ROCK`) {
     switch (computerSelection) {
-      case `PAPER`: return `Computer`;
+      case `PAPER`: console.log(`Computer`);
         break;
-      case `SCISSORS`: return `Player`;
+      case `SCISSORS`: console.log(`Player`);
         break;
     }
   } else if (playerSelection === `PAPER`) {
     switch (computerSelection) {
-      case `SCISSORS`: return `Computer`;
+      case `SCISSORS`: console.log(`Computer`);
         break;
-      case `ROCK`: return `Player`;
+      case `ROCK`: console.log(`Player`);
         break;
     }
   } else if (playerSelection === `SCISSORS`) {
     switch (computerSelection) {
-      case `ROCK`: return `Computer`;
+      case `ROCK`: console.log(`Computer`);
         break;
-      case `PAPER`: return `Player`;
+      case `PAPER`: console.log(`Player`);
         break;
     }
   }
 }
 
 function game() {
-  let playerScore = 0;
-  let computerScore = 0;
+  // let playerScore = 0;
+  // let computerScore = 0;
 
   // for(let i = 0; i < 5; i++){
   //   console.log(`Round ${i + 1}:`);
   //   let playerSelection = prompt(`Enter your choice (Rock, Paper or Scissors)`);
-  //   let computerSelection = getComputerChoice();
-  //   console.log(`Computer Choice: ${computerSelection}`);
+  let computerSelection = getComputerChoice();
+  console.log(`Computer Choice: ${computerSelection}`);
   //   let winner = playRound(playerSelection,computerSelection);
 
   //   if(winner === `Player`){
@@ -57,17 +57,23 @@ function game() {
   //   console.log(`Player Score: ${playerScore}`);
   //   console.log(`Computer Score: ${computerScore}`);
   // }
-  console.log(`Final Player Score: ${playerScore}`);
-  console.log(`Final Computer Score: ${computerScore}`);
-  if (playerScore > computerScore) {
-    console.log(`You win!`)
-  } else if (computerScore > playerScore) {
-    console.log(`Sorry! You lose!`)
-  } else {
-    console.log(`Nobody wins! It's a tie!`)
-  }
+
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach((button) => {
+    button.addEventListener('click',
+      () => playRound(button.textContent, computerSelection))
+  });
+  // console.log(`Final Player Score: ${playerScore}`);
+  // console.log(`Final Computer Score: ${computerScore}`);
+  // if (playerScore > computerScore) {
+  //   console.log(`You win!`)
+  // } else if (computerScore > playerScore) {
+  //   console.log(`Sorry! You lose!`)
+  // } else {
+  //   console.log(`Nobody wins! It's a tie!`)
+  // }
 }
 
-console.log(`Welcome to Rock, Paper, Scissors.`);
-console.log(`Let's play!`)
+// console.log(`Welcome to Rock, Paper, Scissors.`);
+// console.log(`Let's play!`)
 game();
