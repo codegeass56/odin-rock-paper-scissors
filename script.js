@@ -60,18 +60,18 @@ function game(container) {
   let computerScore = 0;
   const roundDetailsPara = document.createElement('p');
   container.appendChild(roundDetailsPara);
-  for (let i = 0; i < 5; i++) {
+
+  //Add event listeners to buttons
+  const buttons = document.querySelectorAll('button');
+  buttons.forEach((button) => {
+    button.addEventListener('click',
+      () => {
+        playRound(button.textContent, computerSelection);
+      })
+  });
+  for (let i = 0; i < 2; i++) {
     roundDetailsPara.textContent = `Round ${i + 1}:`
-
     document.querySelector('.buttons').style.display = "block";
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach((button) => {
-      button.addEventListener('click',
-        () => {
-          playRound(button.textContent, computerSelection);
-        })
-    });
-
     const inputMessagePara = document.createElement('p');
     inputMessagePara.textContent = `Enter your choice (Rock, Paper or Scissors)`;
     container.appendChild(inputMessagePara);
