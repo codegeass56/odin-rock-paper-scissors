@@ -1,13 +1,18 @@
+//Randomly get a selection from the array of choices
 function getComputerChoice() {
   const choices = [`Rock`, `Paper`, `Scissors`];
 
   return choices[Math.floor(Math.random() * 3)];
 }
 
+//Play a round and return the winner
 function playRound(playerSelection, computerSelection) {
 
+  //Set the parameters to equal case for comparison
   playerSelection = playerSelection.toUpperCase();
   computerSelection = computerSelection.toUpperCase();
+
+  //Depending on game rules, set and return the winner
   let winner = '';
   if (playerSelection === `ROCK`) {
     switch (computerSelection) {
@@ -31,41 +36,13 @@ function playRound(playerSelection, computerSelection) {
         break;
     }
   }
-  updateGUIScore(winner);
+  return winner;
 }
 
-function updateGUIScore(winner) {
-  const roundResultPara = document.createElement('p');
-  if (winner === `Player`) {
-    playerScore++;
-    roundResultPara.textContent = `You win! ${playerSelection} beats 
-            ${computerSelection}!`;
-  } else if (winner === `Computer`) {
-    computerScore++;
-    roundResultPara.textContent = `You win! ${computerSelection} beats 
-            ${playerSelection}!`;
-  } else {
-    roundResultPara.textContent = `It's a tie! ${playerSelection} does 
-            not beat ${computerSelection}!`;
-  }
-  container.appendChild(roundResultPara);
-  const playerScorePara = document.createElement('p');
-  playerScorePara.textContent = `Player Score: ${playerScore}`;
-  const computerScorePara = document.createElement('p');
-  computerScorePara.textContent = `Computer Score: ${computerScore}`;
-}
-
-function game(container) {
-  let playerScore = 0;
-  let computerScore = 0;
-
-  //Create element to display round details
-  const roundDetailsPara = document.createElement('p');
-  roundDetailsPara.classList.add('round-details');
-
-  //Insert element before second child of main container
-  const buttonsContainer = document.querySelector('.buttons');
-  container.insertBefore(roundDetailsPara, container.children[1]);
+//Create and append UI elements for displaying different text content
+function createAndAppendUIElements() {
+  //Get main container
+  let container = document.querySelector('.container');
 
   //Create element to display user-input-message
   const inputMessagePara = document.createElement('p');
@@ -77,45 +54,104 @@ function game(container) {
   computerChoicePara.classList.add('computer-choice-details');
   container.appendChild(computerChoicePara);
 
-  //Add event listeners to buttons
+  //Create element to display round-result
+  const roundResultPara = document.createElement('p');
+  roundResultPara.classList.add('round-result');
+  container.appendChild(roundResultPara);
+
+  //Create element to display current-player-score
+  const playerScorePara = document.createElement('p');
+  playerScorePara.classList.add('current-player-score');
+  container.appendChild(playerScorePara);
+
+  //Create element to display current-computer-score
+  const computerScorePara = document.createElement('p');
+  computerScorePara.classList.add('current-computer-score');
+  container.appendChild(computerScorePara);
+
+  //Create element to display end-game-message
+  const gameEndMessagePara = document.createElement('p');
+  gameEndMessagePara.classList.add('game-end-message');
+  container.appendChild(gameEndMessagePara);
+}
+
+function checkIfGameEnded(playerScore, computerScore) {
+  //Get main container
+  let container = document.querySelector('.container');
+  //Check if either player has reached five points
+  if (playerScore === 5 || computerScore === 5) {
+    //Hide elements
+    document.querySelector('.buttons').style.display = "none";
+    document.querySelector('.user-input-message').style.display = "none";
+    document.querySelector('.computer-choice-details').style.display = "none";
+    document.querySelector('.welcome-message').style.display = "none";
+
+    //Display message depending on game winner
+    if (playerScore === 5) {
+      document.querySelector('.game-end-message').textContent = `Well Played! You win the game!`;
+    } else if (computerScore === 5) {
+      document.querySelector('.game-end-message').textContent = `Game Over! You lose!`;
+    }
+
+    //Add restart button that would refresh the page and restart the game
+    let restartButton = document.createElement('button');
+    restartButton.textContent = 'Restart the game?';
+    restartButton.addEventListener('click', () => location.reload());
+    container.appendChild(restartButton);
+  }
+}
+
+//Begin the game
+function game(container) {
+  //Initialize scores of player and computer
+  let playerScore = 0;
+  let computerScore = 0;
+
+  createAndAppendUIElements();
+
+  //Make the buttons visible
+  document.querySelector('.buttons').style.display = "block";
+
+  //Display user input message
+  document.querySelector('.user-input-message').textContent = `Select your choice (Rock, Paper or Scissors)`;
+
+  //Select all button elements into an array
   const buttons = document.querySelectorAll('button');
+
+  //Add event listener to each button
   buttons.forEach((button) => {
     button.addEventListener('click',
       () => {
-        playRound(button.textContent, computerSelection);
+        //Get the computer selection and display it
+        let computerSelection = getComputerChoice();
+        document.querySelector('.computer-choice-details').textContent = `Computer Choice: ${computerSelection}`;
+
+        //Play a round and get the winner
+        let winner = playRound(button.textContent, computerSelection);
+
+        //Depending on the winner, update the score and display the round result
+        if (winner === `Player`) {
+          playerScore++;
+          document.querySelector('.round-result').textContent = `You win the round! ${button.textContent} beats 
+            ${computerSelection}!`;
+        } else if (winner === `Computer`) {
+          computerScore++;
+          document.querySelector('.round-result').textContent = `You lose the round! ${computerSelection} beats 
+            ${button.textContent}!`;
+        } else {
+          document.querySelector('.round-result').textContent = `This round is a tie! ${button.textContent} does 
+            not beat ${computerSelection}!`;
+        }
+
+        //Display the current game score
+        document.querySelector('.current-player-score').textContent = `Player Score: ${playerScore}`;
+        document.querySelector('.current-computer-score').textContent = `Computer Score: ${computerScore}`;
+
+        checkIfGameEnded(playerScore, computerScore);
       })
   });
-  for (let i = 0; i < 1; i++) {
-    roundDetailsPara.textContent = `Round ${i + 1}:`
-    document.querySelector('.buttons').style.display = "block";
-
-    inputMessagePara.textContent = `Select your choice (Rock, Paper or Scissors)`;
-
-    let computerSelection = getComputerChoice();
-
-    computerChoicePara.textContent = `Computer Choice: ${computerSelection}`;
-  }
-
-  const finalPlayerScorePara = document.createElement('p');
-  finalPlayerScorePara.textContent = `Final Player Score: ${playerScore}`;
-  container.appendChild(finalPlayerScorePara);
-
-  const finalComputerScorePara = document.createElement('p');
-  finalComputerScorePara.textContent = `Final Computer Score: ${computerScore}`;
-  container.appendChild(finalComputerScorePara);
-
-  const finalResultPara = document.createElement('p');
-
-  if (playerScore > computerScore) {
-    finalResultPara.textContent = `You win!`;
-  } else if (computerScore > playerScore) {
-    finalResultPara.textContent = `Sorry! You lose!`;
-  } else {
-    finalResultPara.textContent = `Nobody wins! It's a tie!`;
-  }
-
-  container.appendChild(finalResultPara);
 }
+
 //Get buttons container and hide it
 const buttonsContainer = document.querySelector('.buttons');
 buttonsContainer.style.display = "none";
