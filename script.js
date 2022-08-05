@@ -65,6 +65,9 @@ function game(container) {
   const inputMessagePara = document.createElement('p');
   container.appendChild(inputMessagePara);
 
+  const computerChoicePara = document.createElement('p');
+  container.appendChild(computerChoicePara);
+
   //Add event listeners to buttons
   const buttons = document.querySelectorAll('button');
   buttons.forEach((button) => {
@@ -73,18 +76,15 @@ function game(container) {
         playRound(button.textContent, computerSelection);
       })
   });
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 5; i++) {
     roundDetailsPara.textContent = `Round ${i + 1}:`
     document.querySelector('.buttons').style.display = "block";
 
     inputMessagePara.textContent = `Select your choice (Rock, Paper or Scissors)`;
 
     let computerSelection = getComputerChoice();
-    const computerChoicePara = document.createElement('p');
+
     computerChoicePara.textContent = `Computer Choice: ${computerSelection}`;
-    container.appendChild(computerChoicePara);
-
-
   }
 
   const finalPlayerScorePara = document.createElement('p');
