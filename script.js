@@ -59,13 +59,22 @@ function game(container) {
   let playerScore = 0;
   let computerScore = 0;
 
+  //Create element to display round details
   const roundDetailsPara = document.createElement('p');
-  container.appendChild(roundDetailsPara);
+  roundDetailsPara.classList.add('round-details');
 
+  //Insert element before second child of main container
+  const buttonsContainer = document.querySelector('.buttons');
+  container.insertBefore(roundDetailsPara, container.children[1]);
+
+  //Create element to display user-input-message
   const inputMessagePara = document.createElement('p');
+  inputMessagePara.classList.add('user-input-message');
   container.appendChild(inputMessagePara);
 
+  //Create element to display computer-choice-details
   const computerChoicePara = document.createElement('p');
+  computerChoicePara.classList.add('computer-choice-details');
   container.appendChild(computerChoicePara);
 
   //Add event listeners to buttons
@@ -76,7 +85,7 @@ function game(container) {
         playRound(button.textContent, computerSelection);
       })
   });
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 1; i++) {
     roundDetailsPara.textContent = `Round ${i + 1}:`
     document.querySelector('.buttons').style.display = "block";
 
@@ -107,12 +116,22 @@ function game(container) {
 
   container.appendChild(finalResultPara);
 }
+//Get buttons container and hide it
 const buttonsContainer = document.querySelector('.buttons');
 buttonsContainer.style.display = "none";
-const containerDiv = document.querySelector('.container');
+
+//Get main container
+const mainContainer = document.querySelector('.container');
+
+//Create p element for welcome-message
 const welcomeMessagePara = document.createElement('p');
+welcomeMessagePara.classList.add('welcome-message');
 welcomeMessagePara.appendChild(document.createTextNode(`Welcome to Rock, Paper, Scissors!`));
 welcomeMessagePara.appendChild(document.createElement('br'));
 welcomeMessagePara.appendChild(document.createTextNode(`Let's play!`));
-containerDiv.insertBefore(welcomeMessagePara, containerDiv.firstChild);
-game(containerDiv);
+
+//Set welcome message as first child of main container
+mainContainer.insertBefore(welcomeMessagePara, mainContainer.firstChild);
+
+//Begin game
+game(mainContainer);
