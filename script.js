@@ -58,9 +58,9 @@ function updateGUIScore(winner) {
 function game(container) {
   let playerScore = 0;
   let computerScore = 0;
-
+  const roundDetailsPara = document.createElement('p');
+  container.appendChild(roundDetailsPara);
   for (let i = 0; i < 5; i++) {
-    const roundDetailsPara = document.createElement('p');
     roundDetailsPara.textContent = `Round ${i + 1}:`
 
     document.querySelector('.buttons').style.display = "block";
@@ -112,4 +112,4 @@ welcomeMessagePara.appendChild(document.createTextNode(`Welcome to Rock, Paper, 
 welcomeMessagePara.appendChild(document.createElement('br'));
 welcomeMessagePara.appendChild(document.createTextNode(`Let's play!`));
 containerDiv.insertBefore(welcomeMessagePara, containerDiv.firstChild);
-//game(containerDiv);
+game(containerDiv);
