@@ -73,7 +73,7 @@ function game(container) {
     roundDetailsPara.textContent = `Round ${i + 1}:`
     document.querySelector('.buttons').style.display = "block";
     const inputMessagePara = document.createElement('p');
-    inputMessagePara.textContent = `Enter your choice (Rock, Paper or Scissors)`;
+    inputMessagePara.textContent = `Select your choice (Rock, Paper or Scissors)`;
     container.appendChild(inputMessagePara);
 
     let computerSelection = getComputerChoice();
