@@ -58,8 +58,12 @@ function updateGUIScore(winner) {
 function game(container) {
   let playerScore = 0;
   let computerScore = 0;
+
   const roundDetailsPara = document.createElement('p');
   container.appendChild(roundDetailsPara);
+
+  const inputMessagePara = document.createElement('p');
+  container.appendChild(inputMessagePara);
 
   //Add event listeners to buttons
   const buttons = document.querySelectorAll('button');
@@ -72,9 +76,8 @@ function game(container) {
   for (let i = 0; i < 2; i++) {
     roundDetailsPara.textContent = `Round ${i + 1}:`
     document.querySelector('.buttons').style.display = "block";
-    const inputMessagePara = document.createElement('p');
+
     inputMessagePara.textContent = `Select your choice (Rock, Paper or Scissors)`;
-    container.appendChild(inputMessagePara);
 
     let computerSelection = getComputerChoice();
     const computerChoicePara = document.createElement('p');
